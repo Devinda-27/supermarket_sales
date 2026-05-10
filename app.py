@@ -75,5 +75,3 @@ import pickle
 # simpan model
 with open('model.pkl', 'wb') as file:
     pickle.dump(kmeans, file)
-
-files.download('model.pkl')
