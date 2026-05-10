@@ -1,24 +1,44 @@
 import streamlit as st
-import pickle
+import pandas as pd
 import numpy as np
+import pickle
+from sklearn.cluster import KMeans
 
-# ==========================
+# =====================================
+# LOAD DATASET
+# =====================================
+df = pd.read_csv("Mall_Customers.csv")
+
+# Ambil fitur
+X = df[['Annual Income (k$)', 'Spending Score (1-100)']]
+
+# =====================================
+# TRAINING MODEL
+# =====================================
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X)
+
+# =====================================
+# SIMPAN MODEL
+# =====================================
+with open("model.pkl", "wb") as file:
+    pickle.dump(kmeans, file)
+
+# =====================================
 # LOAD MODEL
-# ==========================
+# =====================================
 with open("model.pkl", "rb") as file:
     model = pickle.load(file)
 
-# ==========================
-# TAMPILAN STREAMLIT
-# ==========================
+# =====================================
+# STREAMLIT APP
+# =====================================
 st.set_page_config(page_title="Clustering Customer")
 
 st.title("Aplikasi Clustering Customer")
-st.write("Input data customer untuk menentukan cluster.")
+st.write("Masukkan data customer untuk menentukan cluster.")
 
-# ==========================
-# INPUT USER
-# ==========================
+# Input user
 income = st.number_input(
     "Annual Income (k$)",
     min_value=0,
@@ -32,15 +52,13 @@ score = st.number_input(
     step=1
 )
 
-# ==========================
-# PREDIKSI CLUSTER
-# ==========================
+# Tombol prediksi
 if st.button("Prediksi Cluster"):
 
-    # Ubah menjadi array
+    # Data input
     data = np.array([[income, score]])
 
-    # Prediksi cluster
+    # Prediksi
     hasil = model.predict(data)
 
     # Tampilkan hasil
