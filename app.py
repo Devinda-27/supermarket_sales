@@ -69,9 +69,3 @@ plt.xlabel('Gross income')
 plt.ylabel('Customer stratification rating')
 plt.title('K-Means Clustering')
 plt.show()
-
-import pickle
-
-# simpan model
-with open('model.pkl', 'wb') as file:
-    pickle.dump(kmeans, file)
