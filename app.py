@@ -70,7 +70,6 @@ plt.ylabel('Customer stratification rating')
 plt.title('K-Means Clustering')
 plt.show()
 
-from google.colab import files
 import pickle
 
 # simpan model
